@@ -10,8 +10,6 @@ int main()
   char *query;  //查询语句    
   int t,r;
   mysql_init(&mysql);
-  unsigned char mail[45];
-  unsigned char pubkey[33];
 
   if (!mysql_real_connect(&mysql, "localhost", "root", "123456", "walletinfo", 0, NULL, 0))
   {
@@ -29,13 +27,15 @@ int main()
   }
 
   res = mysql_store_result(&mysql);//检索完整的结果集至客户端。
-                         
-    
-  sprintf(mail,"%s", row[1]);
-  sprintf(pubkey,"%s", row[2]);
-    
-  printf("mail and pubkey is %s, %s .\n", mail, pubkey);
- 
+
+  while(row = mysql_fetch_row(res))
+  {                           
+    for(t = 0; t < mysql_num_fields(res); t++)
+    {
+      printf("%s\t", row[t]);
+    }
+    printf("\n");
+  }
   mysql_free_result(res);//释放结果集使用的内存。
   mysql_close(&mysql);
   
