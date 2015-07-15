@@ -27,13 +27,12 @@ int main()
   {
     printf("ERROR query: %s", mysql_error(&mysql));
   }
-
+  printf("1111\n");
   res = mysql_store_result(&mysql);//检索完整的结果集至客户端。
-                         
-    
+  printf("2222\n");          
   sprintf(mail,"%s", row[1]);
   sprintf(pubkey,"%s", row[2]);
-    
+  printf("3333\n");
   printf("mail and pubkey is %s, %s .\n", mail, pubkey);
  
   mysql_free_result(res);//释放结果集使用的内存。
