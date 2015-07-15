@@ -34,8 +34,9 @@ int main()
   }
 
   res = mysql_store_result(&mysql);//检索完整的结果集至客户端。
+  mysql_close(&mysql);
   row = mysql_fetch_row(res);
-    
+  
   sprintf(mail,"%s", row[1]);
   sprintf(pubkey,"%s", row[2]);
   sprintf(encsec,"%s", row[3]);
@@ -43,11 +44,11 @@ int main()
   sprintf(salt,"%s", row[5]);
   sprintf(method,"%s", row[6]);
   sprintf(rounds,"%s", row[7]);
+
   printf("11111\n");
   mysql_free_result(res);//释放结果集使用的内存。
   printf("22222\n");
-  mysql_close(&mysql);
-  printf("33333\n");  
+
   printf("mail is %s\n", mail);
   printf("pubkey is %s\n", pubkey);
   printf("encsec is %s\n", encsec);
@@ -55,9 +56,6 @@ int main()
   printf("salt is %s\n", salt);
   printf("method is %s\n", method);
   printf("rounds is %s\n", rounds);
- 
-  mysql_free_result(res);//释放结果集使用的内存。
-  mysql_close(&mysql);
   
   return 0;
 }
