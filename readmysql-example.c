@@ -37,7 +37,7 @@ int main()
     printf("\n");
   }
   mysql_free_result(res);//释放结果集使用的内存。
-  mysql_close(&mysql);
+  mysql_close(&mysql); //
   
   return 0;
 }

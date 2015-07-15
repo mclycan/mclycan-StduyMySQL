@@ -24,7 +24,7 @@ int main()
   }
   else
   {
-    printf("Connected...\n");
+    //printf("Connected...\n");
   }
   query = "select * from info where id=2;";
   t = mysql_real_query(&mysql, query, (unsigned int)strlen(query));//执行指定为计数字符串的SQL查询。
@@ -45,9 +45,7 @@ int main()
   sprintf(method,"%s", row[6]);
   sprintf(rounds,"%s", row[7]);
 
-  printf("11111\n");
   mysql_free_result(res);//释放结果集使用的内存。
-  printf("22222\n");
 
   printf("mail is %s\n", mail);
   printf("pubkey is %s\n", pubkey);

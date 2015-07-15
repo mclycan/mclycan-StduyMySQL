@@ -4,8 +4,6 @@
 
 
 
-
-
 1. **linux安装mysql环境**： 
 
 		sudo apt-get install mysql-server mysql-client
@@ -125,6 +123,9 @@
 
 
 
+1. **代码**：
+
+		详见 ReadFromMysql.c 或者 readmysql-example.c
 
 
 	gcc -I/usr/include/mysql ReadFromMysql.c -L/usr/lib/mysql -lmysqlclient -o ReadFromMysql
