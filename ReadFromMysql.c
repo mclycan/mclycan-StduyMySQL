@@ -20,7 +20,6 @@ int main()
   unsigned char salt[8];
   unsigned char string_method[2];
   unsigned char string_rounds[10];
-  unsigned char hex_mail[45];
   unsigned char hex_pubkey[33];
   unsigned char hex_encsec[49];
   unsigned char hex_encmas[49];
@@ -46,7 +45,7 @@ int main()
   mysql_close(&mysql);
   row = mysql_fetch_row(res);
   
-  sprintf(hex_mail,"%s", row[1]);
+  sprintf(mail,"%s", row[1]);
   sprintf(hex_pubkey,"%s", row[2]);
   sprintf(hex_encsec,"%s", row[3]);
   sprintf(hex_encmas,"%s", row[4]);
@@ -65,7 +64,6 @@ int main()
   printf("rounds is %s\n", string_rounds);
 
 
-  hexToStr(hex_mail, mail);
   hexToStr(hex_pubkey, pubkey);
   hexToStr(hex_encsec, encsec);
   hexToStr(hex_encmas, encmas);
