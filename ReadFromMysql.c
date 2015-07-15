@@ -12,6 +12,11 @@ int main()
   mysql_init(&mysql);
   unsigned char mail[45];
   unsigned char pubkey[33];
+  unsigned char encsec[48];
+  unsigned char encmas[48];
+  unsigned char salt[8];
+  int method;
+  int rounds;
 
   if (!mysql_real_connect(&mysql, "localhost", "root", "123456", "walletinfo", 0, NULL, 0))
   {
@@ -27,14 +32,25 @@ int main()
   {
     printf("ERROR query: %s", mysql_error(&mysql));
   }
-  printf("1111\n");
+
   res = mysql_store_result(&mysql);//检索完整的结果集至客户端。
   row = mysql_fetch_row(res);
-  printf("2222\n");          
+    
   sprintf(mail,"%s", row[1]);
   sprintf(pubkey,"%s", row[2]);
-  printf("3333\n");
-  printf("mail and pubkey is %s, %s .\n", mail, pubkey);
+  sprintf(encsec,"%s", row[3]);
+  sprintf(encmas,"%s", row[4]);
+  sprintf(salt,"%s", row[5]);
+  sprintf(method,"%d", row[6]);
+  sprintf(rounds,"%d", row[7]);
+
+  printf("mail is %s\n", mail);
+  printf("pubkey is %s\n", pubkey);
+  printf("encsec is %s\n", encsec);
+  printf("encmas is %s\n", encmas);
+  printf("salt is %s\n", salt);
+  printf("method is %d\n", method);
+  printf("rounds is %d\n", rounds);
  
   mysql_free_result(res);//释放结果集使用的内存。
   mysql_close(&mysql);
