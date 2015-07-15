@@ -15,8 +15,8 @@ int main()
   unsigned char encsec[48];
   unsigned char encmas[48];
   unsigned char salt[8];
-  int method;
-  int rounds;
+  unsigned char  method[2];
+  unsigned char  rounds[10];
 
   if (!mysql_real_connect(&mysql, "localhost", "root", "123456", "walletinfo", 0, NULL, 0))
   {
@@ -41,16 +41,16 @@ int main()
   sprintf(encsec,"%s", row[3]);
   sprintf(encmas,"%s", row[4]);
   sprintf(salt,"%s", row[5]);
-  sprintf(method,"%d", row[6]);
-  sprintf(rounds,"%d", row[7]);
+  sprintf(method,"%s", row[6]);
+  sprintf(rounds,"%s", row[7]);
 
   printf("mail is %s\n", mail);
   printf("pubkey is %s\n", pubkey);
   printf("encsec is %s\n", encsec);
   printf("encmas is %s\n", encmas);
   printf("salt is %s\n", salt);
-  printf("method is %d\n", method);
-  printf("rounds is %d\n", rounds);
+  printf("method is %s\n", method);
+  printf("rounds is %s\n", rounds);
  
   mysql_free_result(res);//释放结果集使用的内存。
   mysql_close(&mysql);
