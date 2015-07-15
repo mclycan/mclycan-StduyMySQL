@@ -43,7 +43,9 @@ int main()
   sprintf(salt,"%s", row[5]);
   sprintf(method,"%s", row[6]);
   sprintf(rounds,"%s", row[7]);
-
+  mysql_free_result(res);//释放结果集使用的内存。
+  mysql_close(&mysql);
+  
   printf("mail is %s\n", mail);
   printf("pubkey is %s\n", pubkey);
   printf("encsec is %s\n", encsec);
@@ -53,9 +55,7 @@ int main()
   printf("rounds is %s\n", rounds);
  
   mysql_free_result(res);//释放结果集使用的内存。
-  printf("1111\n");
   mysql_close(&mysql);
-  printf("2222\n");
   
   return 0;
 }
