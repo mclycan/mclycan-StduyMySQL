@@ -19,14 +19,15 @@ int main()
   {
     printf("Connected...\n");
   }
-  query = "select * from info;";
+  query = "select * from info where id=2;";
   t = mysql_real_query(&mysql, query, (unsigned int)strlen(query));//执行指定为计数字符串的SQL查询。
   if(t)
   {
-    printf("执行显示时出现异常: %s", mysql_error(&mysql));
+    printf("ERROR query: %s", mysql_error(&mysql));
   }
+
   res = mysql_store_result(&mysql);//检索完整的结果集至客户端。
-  //printf("姓名\t学号\t年龄\t\n");
+
   while(row = mysql_fetch_row(res))
   {                           
     for(t = 0; t < mysql_num_fields(res); t++)
