@@ -55,7 +55,7 @@ int main()
 
   mysql_free_result(res);//释放结果集使用的内存。
 
-  printf("mail is %s\n", hex_mail);
+  printf("mail is %s\n", mail);
   printf("pubkey is %s\n", hex_pubkey);
   printf("encsec is %s\n", hex_encsec);
   printf("encmas is %s\n", hex_encmas);
@@ -68,8 +68,7 @@ int main()
   hexToStr(hex_encsec, encsec);
   hexToStr(hex_encmas, encmas);
   hexToStr(hex_salt, salt);
-
-  printf("mail is %s\n", mail);
+  
   printf("pubkey is %s\n", pubkey);
   printf("encsec is %s\n", encsec);
   printf("encmas is %s\n", encmas);
@@ -77,11 +76,11 @@ int main()
 
   for(i = 0; i < 48; i++)
   {
-    if((i+1) % 8 == 0)
+    if(i % 8 == 0)
       printf("\n");
     printf("0x%02x ", encsec[i]);
   }
-  printf("\n");
+  printf("\n"); 
 
   return 0;
 }

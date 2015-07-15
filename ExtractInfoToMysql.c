@@ -153,13 +153,14 @@ int main(int argc, char **argv)
       fprintf(stderr, "Error: couldn't find required info in wallet.\n\n");
       exit(EXIT_FAILURE);
     }
-  /*
-	for(i = 0; i < 8; i++)
+  
+	for(i = 0; i < 48; i++)
 	{
-		printf("%02x ",salt[i]);
+		printf("%02x ",encrypted_seckey[i]);
 	}
 	printf("\n");
-	*/
+	
+  /*
     mysql_init(&my_connection);
     //"localhost", "root", "123456", "mysql" : ip, user, passwd, database;
     if (mysql_real_connect(&my_connection, "localhost", "root", "123456", "walletinfo", 0, NULL, 0)) 
@@ -219,7 +220,7 @@ int main(int argc, char **argv)
             mysql_errno(&my_connection), mysql_error(&my_connection));
         }
     }
-
+  */
     return EXIT_SUCCESS;
 }
 
