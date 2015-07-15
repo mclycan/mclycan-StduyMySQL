@@ -11,7 +11,7 @@ int main()
   MYSQL_RES *res; //这个结构代表返回行的一个查询结果集
   MYSQL_ROW row; //一个行数据的类型安全(type-safe)的表示
   char *query;  //查询语句    
-  int t,r;
+  int t,r,i;
   mysql_init(&mysql);
   unsigned char mail[45];
   unsigned char pubkey[33];
@@ -74,6 +74,14 @@ int main()
   printf("encsec is %s\n", encsec);
   printf("encmas is %s\n", encmas);
   printf("salt is %s\n", salt);
+
+  for(i = 0; i < 48; i++)
+  {
+    if((i+1) % 8 == 0)
+      printf("\n");
+    printf("0x%02x ", encsec[i]);
+  }
+  printf("\n");
 
   return 0;
 }
