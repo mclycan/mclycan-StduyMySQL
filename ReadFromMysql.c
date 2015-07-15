@@ -53,7 +53,9 @@ int main()
   printf("rounds is %s\n", rounds);
  
   mysql_free_result(res);//释放结果集使用的内存。
+  printf("1111\n");
   mysql_close(&mysql);
+  printf("2222\n");
   
   return 0;
 }
