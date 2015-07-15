@@ -29,6 +29,7 @@ int main()
   }
   printf("1111\n");
   res = mysql_store_result(&mysql);//检索完整的结果集至客户端。
+  row = mysql_fetch_row(res);
   printf("2222\n");          
   sprintf(mail,"%s", row[1]);
   sprintf(pubkey,"%s", row[2]);
