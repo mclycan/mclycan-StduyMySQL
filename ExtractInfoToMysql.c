@@ -26,12 +26,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <unistd.h>
 #include <mysql/mysql.h>
 
+int strToHex(unsigned char *ch, unsigned char *hex);
+unsigned char valueToHexCh(const int value);
+
 /*
  * Database
  */
 
 unsigned char pkey[33], encrypted_seckey[48], encrypted_masterkey[48], salt[8];
 unsigned int pubkey_len, encrypted_seckey_len, encrypted_masterkey_len, method, rounds;
+unsigned char pkey_hex[33], encrypted_seckey_hex[48], encrypted_masterkey_hex[48], salt_hex[8];
 
 int get_wallet_info(char *filename)
 {
@@ -153,20 +157,14 @@ int main(int argc, char **argv)
       fprintf(stderr, "Error: couldn't find required info in wallet.\n\n");
       exit(EXIT_FAILURE);
     }
-  
-	for(i = 0; i < 48; i++)
-	{
-		printf("%02x ",encrypted_seckey[i]);
-	}
-	printf("\n");
 	
-  /*
     mysql_init(&my_connection);
     //"localhost", "root", "123456", "mysql" : ip, user, passwd, database;
     if (mysql_real_connect(&my_connection, "localhost", "root", "123456", "walletinfo", 0, NULL, 0)) 
     {
         printf("Connection success\n");
         //res = mysql_query(&my_connection, "INSERT INTO wallet(fname, age) VALUES('david', 8)");
+        /*
         sprintf(sql_insert, "INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x', '%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x', '%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x', '%02x%02x%02x%02x%02x%02x%02x%02x', '%d', '%d');", 
 			  mail, 
 
@@ -194,7 +192,23 @@ int main(int argc, char **argv)
 
 		    salt[0], salt[1], salt[2], salt[3], salt[4], salt[5], salt[6], salt[7],
 			  method,
-			  rounds);
+			  rounds);  
+        */
+
+        strToHex(pkey, pkey_hex);
+        strToHex(encrypted_seckey, encrypted_seckey_hex);
+        strToHex(encrypted_masterkey, encrypted_masterkey_hex);
+        strToHex(salt, salt_hex);
+
+        sprintf(sql_insert
+        ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
+        ,mail
+        ,pkey
+        ,encrypted_seckey
+        ,encrypted_masterkey
+        ,salt
+        ,method
+        ,rounds);
 
         res = mysql_query(&my_connection, sql_insert);
 
@@ -220,7 +234,43 @@ int main(int argc, char **argv)
             mysql_errno(&my_connection), mysql_error(&my_connection));
         }
     }
-  */
+
     return EXIT_SUCCESS;
 }
 
+int strToHex(unsigned char *ch, unsigned char *hex)
+{
+    int high,low;
+    int tmp = 0;
+
+    if(ch == NULL || hex == NULL){
+      return -1;
+    }
+
+    while(*ch){
+        tmp = (int)*ch;
+        high = tmp >> 4;
+        low = tmp & 15;
+        *hex++ = valueToHexCh(high); //先写高字节
+        *hex++ = valueToHexCh(low); //其次写低字节
+        ch++;
+    }
+  *hex = '\0';
+  return 0;
+}
+
+unsigned char valueToHexCh(const int value)
+{
+    unsigned char result = '\0';
+    if(value >= 0 && value <= 9){
+      result = (unsigned char)(value + 48); //48为ascii编码的‘0’字符编码值
+    }
+    else if(value >= 10 && value <= 15){
+      result = (unsigned char)(value - 10 + 65); //减去10则找出其在16进制的偏移量，65为ascii的'A'的字符编码值
+   }
+    else{
+      ;
+    }
+
+   return result;
+}
