@@ -263,7 +263,7 @@ int strToHex(unsigned char *ch, unsigned char *hex)
 unsigned char valueToHexCh(const int value)
 {
     unsigned char result = '\0';
-    printf("cccc\n");
+ 
     if(value >= 0 && value <= 9){
       result = (unsigned char)(value + 48); //48为ascii编码的‘0’字符编码值
     }
@@ -273,6 +273,6 @@ unsigned char valueToHexCh(const int value)
     else{
       ;
     }
-    printf("dddd\n");
+
    return result;
 }
