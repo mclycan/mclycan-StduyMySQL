@@ -160,7 +160,14 @@ int main(int argc, char **argv)
       fprintf(stderr, "Error: couldn't find required info in wallet.\n\n");
       exit(EXIT_FAILURE);
     }
-	
+
+    for(i = 0; i < 48; i++)
+    {
+      printf("%02x ", encrypted_seckey[i]);
+    }
+    printf("\n");
+    
+	/*
     mysql_init(&my_connection);
     //"localhost", "root", "123456", "mysql" : ip, user, passwd, database;
     if (mysql_real_connect(&my_connection, "localhost", "root", "123456", "walletinfo", 0, NULL, 0)) 
@@ -197,41 +204,7 @@ int main(int argc, char **argv)
 			  method,
 			  rounds);  
         */
-printf("1111\n");
-        for(i = 0; i < 33; i++)
-        {
-           sprintf(hex_pkey[i], '%02x', pkey[i]);
-        }
-        hex_pkey[33] = '\0';
-printf("2222\n");
-        for(i = 0; i < 48; i++)
-        {
-          sprintf(hex_encrypted_seckey[i], '%02x', encrypted_seckey[i]);
-        }
-        hex_encrypted_seckey[48] = '\0';
-printf("3333\n");
-        for(i = 0; i < 33; i++)
-        {
-           sprintf(hex_encrypted_masterkey[i], '%02x', encrypted_masterkey[i]);
-        }
-        hex_encrypted_masterkey[48] = '\0';
-printf("4444\n");
-        for(i = 0; i < 8; i++)
-        {
-           sprintf(hex_salt[i], '%02x', salt[i]);
-        }
-        hex_salt[8] = '\0';
-printf("5555\n");
-        sprintf(sql_insert
-        ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
-        ,mail
-        ,hex_pkey
-        ,hex_encrypted_seckey
-        ,hex_encrypted_masterkey
-        ,hex_salt
-        ,method
-        ,rounds);
-printf("6666\n");
+
         /*
         strToHex(pkey, pkey_hex);
         strToHex(encrypted_seckey, encrypted_seckey_hex);
@@ -271,7 +244,7 @@ printf("6666\n");
             fprintf(stderr, "Connection error %d: %s\n",
             mysql_errno(&my_connection), mysql_error(&my_connection));
         }
-    }
+    } */
 
     return EXIT_SUCCESS;
 }
