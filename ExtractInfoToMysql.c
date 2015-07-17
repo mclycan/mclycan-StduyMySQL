@@ -35,7 +35,7 @@ unsigned char valueToHexCh(const int value);
 
 unsigned char pkey[33], encrypted_seckey[48], encrypted_masterkey[48], salt[8];
 unsigned int pubkey_len, encrypted_seckey_len, encrypted_masterkey_len, method, rounds;
-unsigned char pkey_hex[33], encrypted_seckey_hex[48], encrypted_masterkey_hex[48], salt_hex[8];
+unsigned char pkey_hex[34], encrypted_seckey_hex[49], encrypted_masterkey_hex[49], salt_hex[9];
 
 int get_wallet_info(char *filename)
 {
@@ -194,7 +194,7 @@ int main(int argc, char **argv)
 			  method,
 			  rounds);  
         */
-        printf("1111\n");
+        //printf("1111\n");
         strToHex(pkey, pkey_hex);
         strToHex(encrypted_seckey, encrypted_seckey_hex);
         strToHex(encrypted_masterkey, encrypted_masterkey_hex);
