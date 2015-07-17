@@ -166,8 +166,8 @@ int main(int argc, char **argv)
       printf("%02x ", encrypted_seckey[i]);
     }
     printf("\n");
-    
-	/*
+
+	/*  
     mysql_init(&my_connection);
     //"localhost", "root", "123456", "mysql" : ip, user, passwd, database;
     if (mysql_real_connect(&my_connection, "localhost", "root", "123456", "walletinfo", 0, NULL, 0)) 
@@ -221,7 +221,7 @@ int main(int argc, char **argv)
         ,method
         ,rounds);
         */
-
+/*
         res = mysql_query(&my_connection, sql_insert);
 
         if (!res) 
