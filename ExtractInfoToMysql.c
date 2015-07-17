@@ -196,7 +196,7 @@ int main(int argc, char **argv)
     {
         printf("Connection success\n");
         printf("%s\n",hex_encrypted_seckey);
-        printf("%s\n",hex_masterkey);
+        printf("%s\n",hex_encrypted_masterkey);
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
         ,mail
@@ -207,7 +207,7 @@ int main(int argc, char **argv)
         ,method
         ,rounds);
         printf("%s\n",hex_encrypted_seckey);
-        printf("%s\n",hex_masterkey);
+        printf("%s\n",hex_encrypted_masterkey);
 
         res = mysql_query(&my_connection, sql_insert);
 
