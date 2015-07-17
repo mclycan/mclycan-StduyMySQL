@@ -207,19 +207,19 @@ int main(int argc, char **argv)
         {
           sprintf(hex_encrypted_seckey[i], '%02x', encrypted_seckey[i]);
         }
-        hex_pkey[48] = '\0';
+        hex_encrypted_seckey[48] = '\0';
 
         for(i = 0; i < 33; i++)
         {
            sprintf(hex_encrypted_masterkey[i], '%02x', encrypted_masterkey[i]);
         }
-        hex_pkey[48] = '\0';
+        hex_encrypted_masterkey[48] = '\0';
 
         for(i = 0; i < 8; i++)
         {
            sprintf(hex_salt[i], '%02x', salt[i]);
         }
-        hex_pkey[8] = '\0';
+        hex_salt[8] = '\0';
         
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
