@@ -135,7 +135,7 @@ int main(int argc, char **argv)
   char *filename;
   MYSQL my_connection;
   int res, i;
-  unsigned char sql_insert[800];
+  unsigned char sql_insert[520];
  
   if(optind >= argc)
     {
@@ -199,8 +199,8 @@ int main(int argc, char **argv)
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
         ,mail
-        ,hex_pkey
         ,hex_encrypted_seckey
+        ,hex_pkey
         ,hex_encrypted_masterkey
         ,hex_salt
         ,method
