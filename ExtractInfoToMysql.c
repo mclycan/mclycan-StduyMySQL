@@ -135,7 +135,7 @@ int main(int argc, char **argv)
   char *filename;
   MYSQL my_connection;
   int res, i;
-  unsigned char sql_insert[520];
+  unsigned char sql_insert[800];
  
   if(optind >= argc)
     {
@@ -171,7 +171,7 @@ int main(int argc, char **argv)
       encrypted_seckey[30],  encrypted_seckey[31], encrypted_seckey[32], encrypted_seckey[33], encrypted_seckey[34], encrypted_seckey[35],
       encrypted_seckey[36],  encrypted_seckey[37], encrypted_seckey[38], encrypted_seckey[39], encrypted_seckey[40], encrypted_seckey[41],
       encrypted_seckey[42],  encrypted_seckey[43], encrypted_seckey[44], encrypted_seckey[45], encrypted_seckey[46], encrypted_seckey[47]);
-printf("%s\n",hex_encrypted_seckey);
+    //printf("%s\n",hex_encrypted_seckey);
       
     sprintf(hex_encrypted_masterkey
     ,"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"
