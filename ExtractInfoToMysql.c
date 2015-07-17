@@ -199,8 +199,8 @@ int main(int argc, char **argv)
         //printf("1111\n");
         strToHex(pkey, pkey_hex);
         strToHex(encrypted_seckey, encrypted_seckey_hex);
-        strToHex2(encrypted_masterkey, encrypted_masterkey_hex);
-        strToHex(salt, salt_hex);
+        strToHex(encrypted_masterkey, encrypted_masterkey_hex);
+        strToHex2(salt, salt_hex);
 
         printf("2222\n");
         sprintf(sql_insert
@@ -265,11 +265,10 @@ int strToHex2(unsigned char *ch, unsigned char *hex)
 {
     int high,low;
     int tmp = 0;
-
+    printf("aaaa\n");
     if(ch == NULL || hex == NULL){
       return -1;
     }
-    printf("aaaa\n");
     while(*ch){
         tmp = (int)*ch;
         high = tmp >> 4;
@@ -280,7 +279,6 @@ int strToHex2(unsigned char *ch, unsigned char *hex)
     }
     printf("bbbb\n");
   *hex = '\0';
-  printf("eeee\n");
   return 0;
 }
 
@@ -315,5 +313,5 @@ unsigned char valueToHexCh2(const int value)
       ;
     }
     printf("dddd\n");
-   return result;
+    return result;
 }
