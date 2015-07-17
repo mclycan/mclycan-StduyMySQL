@@ -197,30 +197,31 @@ int main(int argc, char **argv)
 			  method,
 			  rounds);  
         */
+printf("1111\n");
         for(i = 0; i < 33; i++)
         {
            sprintf(hex_pkey[i], '%02x', pkey[i]);
         }
         hex_pkey[33] = '\0';
-
+printf("2222\n");
         for(i = 0; i < 48; i++)
         {
           sprintf(hex_encrypted_seckey[i], '%02x', encrypted_seckey[i]);
         }
         hex_encrypted_seckey[48] = '\0';
-
+printf("3333\n");
         for(i = 0; i < 33; i++)
         {
            sprintf(hex_encrypted_masterkey[i], '%02x', encrypted_masterkey[i]);
         }
         hex_encrypted_masterkey[48] = '\0';
-
+printf("4444\n");
         for(i = 0; i < 8; i++)
         {
            sprintf(hex_salt[i], '%02x', salt[i]);
         }
         hex_salt[8] = '\0';
-        
+printf("5555\n");
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
         ,mail
@@ -230,7 +231,7 @@ int main(int argc, char **argv)
         ,hex_salt
         ,method
         ,rounds);
-
+printf("6666\n");
         /*
         strToHex(pkey, pkey_hex);
         strToHex(encrypted_seckey, encrypted_seckey_hex);
