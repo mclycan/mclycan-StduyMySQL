@@ -39,7 +39,6 @@ unsigned char pkey[33], encrypted_seckey[48], encrypted_masterkey[48], salt[8];
 unsigned int pubkey_len, encrypted_seckey_len, encrypted_masterkey_len, method, rounds;
 //unsigned char pkey_hex[80], encrypted_seckey_hex[100], encrypted_masterkey_hex[100], salt_hex[100];
 unsigned char hex_pkey[34], hex_encrypted_seckey[49], hex_encrypted_masterkey[49], hex_salt[9];
-unsigned char *p;
 
 int get_wallet_info(char *filename)
 {
@@ -161,12 +160,18 @@ int main(int argc, char **argv)
       fprintf(stderr, "Error: couldn't find required info in wallet.\n\n");
       exit(EXIT_FAILURE);
     }
-    p = hex_encrypted_seckey[0];
-    for(i = 0; i < 48; i++)
-    {
-      sprintf(&p, "%02x", encrypted_seckey[i]);
-      p = hex_encrypted_seckey[i+1];
-    }
+   
+    sprintf(hex_encrypted_seckey
+    ,"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"
+    , encrypted_seckey[0],   encrypted_seckey[1],  encrypted_seckey[2],  encrypted_seckey[3],  encrypted_seckey[4],  encrypted_seckey[5],
+      encrypted_seckey[6],   encrypted_seckey[7],  encrypted_seckey[8],  encrypted_seckey[9],  encrypted_seckey[10], encrypted_seckey[11],
+      encrypted_seckey[12],  encrypted_seckey[13], encrypted_seckey[14], encrypted_seckey[15], encrypted_seckey[16], encrypted_seckey[17],
+      encrypted_seckey[18],  encrypted_seckey[19], encrypted_seckey[20], encrypted_seckey[21], encrypted_seckey[22], encrypted_seckey[23],
+      encrypted_seckey[24],  encrypted_seckey[25], encrypted_seckey[26], encrypted_seckey[27], encrypted_seckey[28], encrypted_seckey[29],
+      encrypted_seckey[30],  encrypted_seckey[31], encrypted_seckey[32], encrypted_seckey[33], encrypted_seckey[34], encrypted_seckey[35],
+      encrypted_seckey[36],  encrypted_seckey[37], encrypted_seckey[38], encrypted_seckey[39], encrypted_seckey[40], encrypted_seckey[41],
+      encrypted_seckey[42],  encrypted_seckey[43], encrypted_seckey[44], encrypted_seckey[45], encrypted_seckey[46], encrypted_seckey[47]);
+      
     printf("%s\n", hex_encrypted_seckey);
 
 	/*  
