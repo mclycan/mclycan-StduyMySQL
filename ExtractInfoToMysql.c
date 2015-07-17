@@ -195,17 +195,19 @@ int main(int argc, char **argv)
     if (mysql_real_connect(&my_connection, "localhost", "root", "123456", "walletinfo", 0, NULL, 0)) 
     {
         printf("Connection success\n");
-       
+        printf("%s\n",hex_encrypted_seckey);
+        printf("%s\n",hex_masterkey);
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
         ,mail
-        ,hex_encrypted_seckey
         ,hex_pkey
+        ,hex_encrypted_seckey
         ,hex_encrypted_masterkey
         ,hex_salt
         ,method
         ,rounds);
-        
+        printf("%s\n",hex_encrypted_seckey);
+        printf("%s\n",hex_masterkey);
 
         res = mysql_query(&my_connection, sql_insert);
 
