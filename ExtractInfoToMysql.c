@@ -163,9 +163,9 @@ int main(int argc, char **argv)
 
     for(i = 0; i < 48; i++)
     {
-      printf("%02x ", encrypted_seckey[i]);
+      sprintf(hex_encrypted_seckey, "%02x", encrypted_seckey[i]);
     }
-    printf("\n");
+    printf("%s\n", hex_encrypted_seckey);
 
 	/*  
     mysql_init(&my_connection);
