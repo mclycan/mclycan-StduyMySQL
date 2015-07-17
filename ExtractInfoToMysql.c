@@ -194,12 +194,12 @@ int main(int argc, char **argv)
 			  method,
 			  rounds);  
         */
-
+        printf("1111\n");
         strToHex(pkey, pkey_hex);
         strToHex(encrypted_seckey, encrypted_seckey_hex);
         strToHex(encrypted_masterkey, encrypted_masterkey_hex);
         strToHex(salt, salt_hex);
-
+        printf("2222\n");
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
         ,mail
@@ -209,10 +209,10 @@ int main(int argc, char **argv)
         ,salt
         ,method
         ,rounds);
-
+        printf("3333\n");
         res = mysql_query(&my_connection, sql_insert);
 
-
+        printf("4444\n");
         if (!res) 
         {
             printf("Inserted %lu rows\n", (unsigned long)mysql_affected_rows(&my_connection));
