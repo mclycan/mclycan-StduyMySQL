@@ -96,11 +96,11 @@
 		
 		create table info(
 		id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-		mail VARCHAR(45) NOT NULL,
-		pubkey VARCHAR(40) NOT NULL, 
-		encsec VARCHAR(50) NOT NULL, 
-		encmas VARCHAR(50) NOT NULL, 
-		salt VARCHAR(10) NOT NULL, 
+		mail VARCHAR(50) NOT NULL,
+		pubkey VARCHAR(100) NOT NULL, 
+		encsec VARCHAR(100) NOT NULL, 
+		encmas VARCHAR(100) NOT NULL, 
+		salt VARCHAR(20) NOT NULL, 
 		method INT(2), 
 		rounds INT(8) 
 		)AUTO_INCREMENT=1;
