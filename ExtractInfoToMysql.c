@@ -35,7 +35,7 @@ unsigned char valueToHexCh(const int value);
 
 unsigned char pkey[33], encrypted_seckey[48], encrypted_masterkey[48], salt[8];
 unsigned int pubkey_len, encrypted_seckey_len, encrypted_masterkey_len, method, rounds;
-unsigned char pkey_hex[34], encrypted_seckey_hex[49], encrypted_masterkey_hex[49], salt_hex[9];
+unsigned char pkey_hex[80], encrypted_seckey_hex[100], encrypted_masterkey_hex[100], salt_hex[20];
 
 int get_wallet_info(char *filename)
 {
