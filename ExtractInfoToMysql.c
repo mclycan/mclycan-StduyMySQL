@@ -188,7 +188,10 @@ int main(int argc, char **argv)
     ,"%02x%02x%02x%02x%02x%02x%02x%02x"
     , salt[0], salt[1], salt[2], salt[3], salt[4], salt[5], salt[6], salt[7]);
     
-
+    printf("%s\n",hex_encrypted_seckey);
+    printf("%s\n",hex_encrypted_masterkey);
+    printf("%s\n",hex_pkey);
+    printf("%s\n",hex_salt);
 	 
     mysql_init(&my_connection);
     //"localhost", "root", "123456", "mysql" : ip, user, passwd, database;
