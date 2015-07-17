@@ -37,7 +37,8 @@ unsigned char valueToHexCh2(const int value);
 
 unsigned char pkey[33], encrypted_seckey[48], encrypted_masterkey[48], salt[8];
 unsigned int pubkey_len, encrypted_seckey_len, encrypted_masterkey_len, method, rounds;
-unsigned char pkey_hex[80], encrypted_seckey_hex[100], encrypted_masterkey_hex[100], salt_hex[100];
+//unsigned char pkey_hex[80], encrypted_seckey_hex[100], encrypted_masterkey_hex[100], salt_hex[100];
+unsigned char hex_pkey[34], hex_encrypted_seckey[49], hex_encrypted_masterkey[49], hex_salt[9];
 
 int get_wallet_info(char *filename)
 {
@@ -196,7 +197,41 @@ int main(int argc, char **argv)
 			  method,
 			  rounds);  
         */
-        //printf("1111\n");
+        for(i = 0; i < 33; i++)
+        {
+           hex_pkey[i] = pkey[i];
+        }
+        hex_pkey[33] = '\0';
+
+        for(i = 0; i < 48; i++)
+        {
+           hex_encrypted_seckey[i] = encrypted_seckey[i];
+        }
+        hex_pkey[48] = '\0';
+
+        for(i = 0; i < 33; i++)
+        {
+           hex_encrypted_masterkey[i] = encrypted_masterkey[i];
+        }
+        hex_pkey[48] = '\0';
+
+        for(i = 0; i < 8; i++)
+        {
+           hex_salt[i] = salt[i];
+        }
+        hex_pkey[8] = '\0';
+        
+        sprintf(sql_insert
+        ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
+        ,mail
+        ,hex_pkey
+        ,hex_encrypted_seckey
+        ,hex_encrypted_masterkey
+        ,hex_salt
+        ,method
+        ,rounds);
+
+        /*
         strToHex(pkey, pkey_hex);
         strToHex(encrypted_seckey, encrypted_seckey_hex);
         strToHex(encrypted_masterkey, encrypted_masterkey_hex);
@@ -211,6 +246,7 @@ int main(int argc, char **argv)
         ,salt
         ,method
         ,rounds);
+        */
 
         res = mysql_query(&my_connection, sql_insert);
 
