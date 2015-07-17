@@ -199,25 +199,25 @@ int main(int argc, char **argv)
         */
         for(i = 0; i < 33; i++)
         {
-           hex_pkey[i] = pkey[i];
+           sprintf(hex_pkey[i], '%02x', pkey[i]);
         }
         hex_pkey[33] = '\0';
 
         for(i = 0; i < 48; i++)
         {
-           hex_encrypted_seckey[i] = encrypted_seckey[i];
+          sprintf(hex_encrypted_seckey[i], '%02x', encrypted_seckey[i]);
         }
         hex_pkey[48] = '\0';
 
         for(i = 0; i < 33; i++)
         {
-           hex_encrypted_masterkey[i] = encrypted_masterkey[i];
+           sprintf(hex_encrypted_masterkey[i], '%02x', encrypted_masterkey[i]);
         }
         hex_pkey[48] = '\0';
 
         for(i = 0; i < 8; i++)
         {
-           hex_salt[i] = salt[i];
+           sprintf(hex_salt[i], '%02x', salt[i]);
         }
         hex_pkey[8] = '\0';
         
