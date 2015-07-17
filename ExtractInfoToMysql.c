@@ -200,9 +200,8 @@ int main(int argc, char **argv)
         strToHex(pkey, pkey_hex);
         strToHex(encrypted_seckey, encrypted_seckey_hex);
         strToHex(encrypted_masterkey, encrypted_masterkey_hex);
-        strToHex2(salt, salt_hex);
+        strToHex(salt, salt_hex);
 
-        printf("2222\n");
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
         ,mail
@@ -212,10 +211,9 @@ int main(int argc, char **argv)
         ,salt
         ,method
         ,rounds);
-        printf("3333\n");
+
         res = mysql_query(&my_connection, sql_insert);
 
-        printf("4444\n");
         if (!res) 
         {
             printf("Inserted %lu rows\n", (unsigned long)mysql_affected_rows(&my_connection));
@@ -261,27 +259,6 @@ int strToHex(unsigned char *ch, unsigned char *hex)
   return 0;
 }
 
-int strToHex2(unsigned char *ch, unsigned char *hex)
-{
-    int high,low;
-    int tmp = 0;
-    printf("aaaa\n");
-    if(ch == NULL || hex == NULL){
-      return -1;
-    }
-    while(*ch){
-        tmp = (int)*ch;
-        high = tmp >> 4;
-        low = tmp & 15;
-        *hex++ = valueToHexCh2(high); //先写高字节
-        *hex++ = valueToHexCh2(low); //其次写低字节
-        ch++;
-    }
-    printf("bbbb\n");
-  *hex = '\0';
-  return 0;
-}
-
 unsigned char valueToHexCh(const int value)
 {
     unsigned char result = '\0';
@@ -299,10 +276,34 @@ unsigned char valueToHexCh(const int value)
    return result;
 }
 
+/*
+int strToHex2(unsigned char *ch, unsigned char *hex)
+{
+    int high,low;
+    int tmp = 0;
+   
+    if(ch == NULL || hex == NULL){
+      return -1;
+    }
+    while(*ch){
+        tmp = (int)*ch;
+        high = tmp >> 4;
+        low = tmp & 15;
+        *hex++ = valueToHexCh2(high); //先写高字节
+        *hex++ = valueToHexCh2(low); //其次写低字节
+        ch++;
+    }
+    
+  *hex = '\0';
+  return 0;
+}
+*/
+
+/*
 unsigned char valueToHexCh2(const int value)
 {
     unsigned char result = '\0';
-    printf("cccc\n");
+   
     if(value >= 0 && value <= 9){
       result = (unsigned char)(value + 48); //48为ascii编码的‘0’字符编码值
     }
@@ -312,6 +313,7 @@ unsigned char valueToHexCh2(const int value)
     else{
       ;
     }
-    printf("dddd\n");
+   
     return result;
 }
+*/
