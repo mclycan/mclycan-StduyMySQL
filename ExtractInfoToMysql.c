@@ -28,6 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 int strToHex(unsigned char *ch, unsigned char *hex);
 unsigned char valueToHexCh(const int value);
+int strToHex2(unsigned char *ch, unsigned char *hex);
+unsigned char valueToHexCh2(const int value);
 
 /*
  * Database
@@ -197,8 +199,9 @@ int main(int argc, char **argv)
         //printf("1111\n");
         strToHex(pkey, pkey_hex);
         strToHex(encrypted_seckey, encrypted_seckey_hex);
-        strToHex(encrypted_masterkey, encrypted_masterkey_hex);
+        strToHex2(encrypted_masterkey, encrypted_masterkey_hex);
         strToHex(salt, salt_hex);
+
         printf("2222\n");
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
@@ -246,6 +249,26 @@ int strToHex(unsigned char *ch, unsigned char *hex)
     if(ch == NULL || hex == NULL){
       return -1;
     }
+    while(*ch){
+        tmp = (int)*ch;
+        high = tmp >> 4;
+        low = tmp & 15;
+        *hex++ = valueToHexCh(high); //先写高字节
+        *hex++ = valueToHexCh(low); //其次写低字节
+        ch++;
+    }
+  *hex = '\0';
+  return 0;
+}
+
+int strToHex2(unsigned char *ch, unsigned char *hex)
+{
+    int high,low;
+    int tmp = 0;
+
+    if(ch == NULL || hex == NULL){
+      return -1;
+    }
     printf("aaaa\n");
     while(*ch){
         tmp = (int)*ch;
@@ -274,5 +297,22 @@ unsigned char valueToHexCh(const int value)
       ;
     }
 
+   return result;
+}
+
+unsigned char valueToHexCh2(const int value)
+{
+    unsigned char result = '\0';
+    printf("cccc\n");
+    if(value >= 0 && value <= 9){
+      result = (unsigned char)(value + 48); //48为ascii编码的‘0’字符编码值
+    }
+    else if(value >= 10 && value <= 15){
+      result = (unsigned char)(value - 10 + 65); //减去10则找出其在16进制的偏移量，65为ascii的'A'的字符编码值
+   }
+    else{
+      ;
+    }
+    printf("dddd\n");
    return result;
 }
