@@ -39,6 +39,7 @@ unsigned char pkey[33], encrypted_seckey[48], encrypted_masterkey[48], salt[8];
 unsigned int pubkey_len, encrypted_seckey_len, encrypted_masterkey_len, method, rounds;
 //unsigned char pkey_hex[80], encrypted_seckey_hex[100], encrypted_masterkey_hex[100], salt_hex[100];
 unsigned char hex_pkey[34], hex_encrypted_seckey[49], hex_encrypted_masterkey[49], hex_salt[9];
+unsigned char *p;
 
 int get_wallet_info(char *filename)
 {
@@ -160,10 +161,11 @@ int main(int argc, char **argv)
       fprintf(stderr, "Error: couldn't find required info in wallet.\n\n");
       exit(EXIT_FAILURE);
     }
-
+    p = hex_encrypted_seckey[0];
     for(i = 0; i < 48; i++)
     {
-      sprintf(hex_encrypted_seckey, "%02x", encrypted_seckey[i]);
+      sprintf(&p, "%02x", encrypted_seckey[i]);
+      p = hex_encrypted_seckey[i+1];
     }
     printf("%s\n", hex_encrypted_seckey);
 
