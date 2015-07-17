@@ -274,12 +274,13 @@ int strToHex2(unsigned char *ch, unsigned char *hex)
         tmp = (int)*ch;
         high = tmp >> 4;
         low = tmp & 15;
-        *hex++ = valueToHexCh(high); //先写高字节
-        *hex++ = valueToHexCh(low); //其次写低字节
+        *hex++ = valueToHexCh2(high); //先写高字节
+        *hex++ = valueToHexCh2(low); //其次写低字节
         ch++;
     }
     printf("bbbb\n");
   *hex = '\0';
+  printf("eeee\n");
   return 0;
 }
 
