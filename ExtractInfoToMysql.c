@@ -32,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 unsigned char pkey[33], encrypted_seckey[48], encrypted_masterkey[48], salt[8];
 unsigned int pubkey_len, encrypted_seckey_len, encrypted_masterkey_len, method, rounds;
-unsigned char hex_pkey[34], hex_encrypted_seckey[49], hex_encrypted_masterkey[49], hex_salt[9];
+const unsigned char hex_pkey[34], hex_encrypted_seckey[49], hex_encrypted_masterkey[49], hex_salt[9];
 
 int get_wallet_info(char *filename)
 {
@@ -154,7 +154,7 @@ int main(int argc, char **argv)
       fprintf(stderr, "Error: couldn't find required info in wallet.\n\n");
       exit(EXIT_FAILURE);
     }
-
+    printf("========================================================================\n");
     sprintf(hex_pkey
     ,"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"
     , pkey[0],  pkey[1],  pkey[2],  pkey[3],  pkey[4],  pkey[5],  pkey[6],  pkey[7],  pkey[8],  pkey[9],  pkey[10],
@@ -202,11 +202,7 @@ printf("%s\n",hex_salt);
     if (mysql_real_connect(&my_connection, "localhost", "root", "123456", "walletinfo", 0, NULL, 0)) 
     {
         //printf("Connection success\n");
-        printf("%s\n",hex_pkey);
-        printf("%s\n",hex_encrypted_seckey);
-        printf("%s\n",hex_encrypted_masterkey);
-        printf("%s\n",hex_salt);
-        printf("========================================================================\n");
+
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
         ,mail
@@ -216,8 +212,7 @@ printf("%s\n",hex_salt);
         ,hex_salt
         ,method
         ,rounds);
-        printf("%s\n",hex_encrypted_seckey);
-        printf("%s\n",hex_encrypted_masterkey);
+       
 
         res = mysql_query(&my_connection, sql_insert);
 
