@@ -166,7 +166,7 @@ int main(int argc, char **argv)
     , pkey[0],  pkey[1],  pkey[2],  pkey[3],  pkey[4],  pkey[5],  pkey[6],  pkey[7],  pkey[8],  pkey[9],  pkey[10],
       pkey[11], pkey[12], pkey[13], pkey[14], pkey[15], pkey[16], pkey[17], pkey[18], pkey[19], pkey[20], pkey[21],
       pkey[22], pkey[23], pkey[24], pkey[25], pkey[26], pkey[27], pkey[28], pkey[29], pkey[30], pkey[31], pkey[32]);
-    hex_pkey[33] = '\0';
+    //hex_pkey[33] = '\0';
     printf("%s\n", hex_pkey);
 
     sprintf(hex_encrypted_seckey
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
       encrypted_seckey[30],  encrypted_seckey[31], encrypted_seckey[32], encrypted_seckey[33], encrypted_seckey[34], encrypted_seckey[35],
       encrypted_seckey[36],  encrypted_seckey[37], encrypted_seckey[38], encrypted_seckey[39], encrypted_seckey[40], encrypted_seckey[41],
       encrypted_seckey[42],  encrypted_seckey[43], encrypted_seckey[44], encrypted_seckey[45], encrypted_seckey[46], encrypted_seckey[47]);
-      hex_encrypted_seckey[48] = '\0';
+      //hex_encrypted_seckey[48] = '\0';
     printf("%s\n", hex_encrypted_seckey);
 
     sprintf(hex_encrypted_masterkey
@@ -192,13 +192,13 @@ int main(int argc, char **argv)
       encrypted_masterkey[30],  encrypted_masterkey[31], encrypted_masterkey[32], encrypted_masterkey[33], encrypted_masterkey[34], encrypted_masterkey[35],
       encrypted_masterkey[36],  encrypted_masterkey[37], encrypted_masterkey[38], encrypted_masterkey[39], encrypted_masterkey[40], encrypted_masterkey[41],
       encrypted_masterkey[42],  encrypted_masterkey[43], encrypted_masterkey[44], encrypted_masterkey[45], encrypted_masterkey[46], encrypted_masterkey[47]);
-      encrypted_masterkey[48] = '\0';
+      //encrypted_masterkey[48] = '\0';
     printf("%s\n", hex_encrypted_masterkey);
 
     sprintf(hex_salt
     ,"%02x%02x%02x%02x%02x%02x%02x%02x"
     , salt[0], salt[1], salt[2], salt[3], salt[4], salt[5], salt[6], salt[7]);
-      salt[48] = '\0';
+      //salt[48] = '\0';
     printf("%s\n", hex_salt);
 
 	/*  
