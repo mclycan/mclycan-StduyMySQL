@@ -115,7 +115,7 @@
 
 1. **结果**：
 
-	![](http://i3.tietuku.com/29fb11c0187f7f46.png)
+	![](http://i3.tietuku.com/5a914f9a43faa38b.png)
 	其中id是自增长，方便取数据
 
 ----------
