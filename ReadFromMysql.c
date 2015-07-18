@@ -13,17 +13,17 @@ int main()
   char *query;  //查询语句    
   int t,r,i;
   mysql_init(&mysql);
-  unsigned char mail[45];
+  unsigned char *mail;
   unsigned char pubkey[33];
   unsigned char encsec[49];
   unsigned char encmas[49];
-  unsigned char salt[8];
-  unsigned char string_method[2];
-  unsigned char string_rounds[10];
-  unsigned char hex_pubkey[33];
-  unsigned char hex_encsec[49];
-  unsigned char hex_encmas[49];
-  unsigned char hex_salt[8];
+  unsigned char salt[9];
+  unsigned char *s_method;
+  unsigned char *s_rounds;
+  unsigned char *hex_pubkey;
+  unsigned char *hex_encsec;
+  unsigned char *hex_encmas;
+  unsigned char *hex_salt;
 
 
   if (!mysql_real_connect(&mysql, "localhost", "root", "123456", "walletinfo", 0, NULL, 0))
@@ -45,13 +45,13 @@ int main()
   mysql_close(&mysql);
   row = mysql_fetch_row(res);
   
-  sprintf(mail,"%s", row[1]);
-  sprintf(hex_pubkey,"%s", row[2]);
-  sprintf(hex_encsec,"%s", row[3]);
-  sprintf(hex_encmas,"%s", row[4]);
-  sprintf(hex_salt,"%s", row[5]);
-  sprintf(string_method,"%s", row[6]);
-  sprintf(string_rounds,"%s", row[7]);
+  asprintf(&mail,"%s", row[1]);
+  asprintf(&hex_pubkey,"%s", row[2]);
+  asprintf(&hex_encsec,"%s", row[3]);
+  asprintf(&hex_encmas,"%s", row[4]);
+  asprintf(&hex_salt,"%s", row[5]);
+  asprintf(&s_method,"%s", row[6]);
+  asprintf(&s_rounds,"%s", row[7]);
 
   mysql_free_result(res);//释放结果集使用的内存。
 
@@ -60,8 +60,8 @@ int main()
   printf("encsec is %s\n", hex_encsec);
   printf("encmas is %s\n", hex_encmas);
   printf("salt is %s\n", hex_salt);
-  printf("method is %s\n", string_method);
-  printf("rounds is %s\n", string_rounds);
+  printf("method is %s\n", s_method);
+  printf("rounds is %s\n", s_rounds);
 
 
   hexToStr(hex_pubkey, pubkey);
@@ -81,6 +81,11 @@ int main()
     printf("0x%02x ", encsec[i]);
   }
   printf("\n"); 
+
+  free(hex_pubkey);
+  free(hex_encsec);
+  free(hex_encmas);
+  free(hex_salt);
 
   return 0;
 }
