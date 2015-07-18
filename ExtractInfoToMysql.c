@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <asprintf.h>
 #include <mysql/mysql.h>
 
 /*
@@ -156,14 +157,14 @@ int main(int argc, char **argv)
       exit(EXIT_FAILURE);
     }
   printf("========================================================================\n");
-    asprintf(hex_pkey
+    asprintf(&hex_pkey
     ,"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"
     , pkey[0],  pkey[1],  pkey[2],  pkey[3],  pkey[4],  pkey[5],  pkey[6],  pkey[7],  pkey[8],  pkey[9],  pkey[10],
       pkey[11], pkey[12], pkey[13], pkey[14], pkey[15], pkey[16], pkey[17], pkey[18], pkey[19], pkey[20], pkey[21],
       pkey[22], pkey[23], pkey[24], pkey[25], pkey[26], pkey[27], pkey[28], pkey[29], pkey[30], pkey[31], pkey[32]);
   printf("%s\n",hex_pkey);
    
-    asprintf(hex_encrypted_seckey
+    asprintf(&hex_encrypted_seckey
     ,"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"
     , encrypted_seckey[0],   encrypted_seckey[1],  encrypted_seckey[2],  encrypted_seckey[3],  encrypted_seckey[4],  encrypted_seckey[5],
       encrypted_seckey[6],   encrypted_seckey[7],  encrypted_seckey[8],  encrypted_seckey[9],  encrypted_seckey[10], encrypted_seckey[11],
@@ -175,7 +176,7 @@ int main(int argc, char **argv)
       encrypted_seckey[42],  encrypted_seckey[43], encrypted_seckey[44], encrypted_seckey[45], encrypted_seckey[46], encrypted_seckey[47]);
   printf("%s\n",hex_encrypted_seckey);
       
-    asprintf(hex_encrypted_masterkey
+    asprintf(&hex_encrypted_masterkey
     ,"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"
     , encrypted_masterkey[0],   encrypted_masterkey[1],  encrypted_masterkey[2],  encrypted_masterkey[3],  encrypted_masterkey[4],  encrypted_masterkey[5],
       encrypted_masterkey[6],   encrypted_masterkey[7],  encrypted_masterkey[8],  encrypted_masterkey[9],  encrypted_masterkey[10], encrypted_masterkey[11],
@@ -187,7 +188,7 @@ int main(int argc, char **argv)
       encrypted_masterkey[42],  encrypted_masterkey[43], encrypted_masterkey[44], encrypted_masterkey[45], encrypted_masterkey[46], encrypted_masterkey[47]);
   printf("%s\n",hex_encrypted_masterkey);
 
-    asprintf(hex_salt
+    asprintf(&hex_salt
     ,"%02x%02x%02x%02x%02x%02x%02x%02x"
     , salt[0], salt[1], salt[2], salt[3], salt[4], salt[5], salt[6], salt[7]);
   printf("%s\n",hex_salt);
@@ -238,6 +239,11 @@ int main(int argc, char **argv)
             mysql_errno(&my_connection), mysql_error(&my_connection));
         }
     } 
+
+    free(hex_pkey);
+    free(hex_encrypted_seckey);
+    free(hex_encrypted_masterkey);
+    free(hex_salt);
 
     return EXIT_SUCCESS;
 }
