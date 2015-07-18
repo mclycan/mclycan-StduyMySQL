@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <mysql/mysql.h>
 #include <string.h>
+#include <stdlib.h>
 
 int hexToStr(unsigned char *hex, unsigned char *ch);
 int hexCharToValue(const unsigned char ch);
