@@ -24,7 +24,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <asprintf.h>
 #include <mysql/mysql.h>
 
 /*
@@ -33,7 +32,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 unsigned char pkey[33], encrypted_seckey[48], encrypted_masterkey[48], salt[8];
 unsigned int pubkey_len, encrypted_seckey_len, encrypted_masterkey_len, method, rounds;
-//unsigned char hex_pkey[34], hex_encrypted_seckey[49], hex_encrypted_masterkey[49], hex_salt[9];
 unsigned char *hex_pkey, *hex_encrypted_seckey, *hex_encrypted_masterkey, *hex_salt;
 
 int get_wallet_info(char *filename)
@@ -156,13 +154,13 @@ int main(int argc, char **argv)
       fprintf(stderr, "Error: couldn't find required info in wallet.\n\n");
       exit(EXIT_FAILURE);
     }
-  printf("========================================================================\n");
+  //printf("========================================================================\n");
     asprintf(&hex_pkey
     ,"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"
     , pkey[0],  pkey[1],  pkey[2],  pkey[3],  pkey[4],  pkey[5],  pkey[6],  pkey[7],  pkey[8],  pkey[9],  pkey[10],
       pkey[11], pkey[12], pkey[13], pkey[14], pkey[15], pkey[16], pkey[17], pkey[18], pkey[19], pkey[20], pkey[21],
       pkey[22], pkey[23], pkey[24], pkey[25], pkey[26], pkey[27], pkey[28], pkey[29], pkey[30], pkey[31], pkey[32]);
-  printf("%s\n",hex_pkey);
+  //printf("%s\n",hex_pkey);
    
     asprintf(&hex_encrypted_seckey
     ,"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"
@@ -174,7 +172,7 @@ int main(int argc, char **argv)
       encrypted_seckey[30],  encrypted_seckey[31], encrypted_seckey[32], encrypted_seckey[33], encrypted_seckey[34], encrypted_seckey[35],
       encrypted_seckey[36],  encrypted_seckey[37], encrypted_seckey[38], encrypted_seckey[39], encrypted_seckey[40], encrypted_seckey[41],
       encrypted_seckey[42],  encrypted_seckey[43], encrypted_seckey[44], encrypted_seckey[45], encrypted_seckey[46], encrypted_seckey[47]);
-  printf("%s\n",hex_encrypted_seckey);
+  //printf("%s\n",hex_encrypted_seckey);
       
     asprintf(&hex_encrypted_masterkey
     ,"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x"
@@ -186,24 +184,24 @@ int main(int argc, char **argv)
       encrypted_masterkey[30],  encrypted_masterkey[31], encrypted_masterkey[32], encrypted_masterkey[33], encrypted_masterkey[34], encrypted_masterkey[35],
       encrypted_masterkey[36],  encrypted_masterkey[37], encrypted_masterkey[38], encrypted_masterkey[39], encrypted_masterkey[40], encrypted_masterkey[41],
       encrypted_masterkey[42],  encrypted_masterkey[43], encrypted_masterkey[44], encrypted_masterkey[45], encrypted_masterkey[46], encrypted_masterkey[47]);
-  printf("%s\n",hex_encrypted_masterkey);
+  //printf("%s\n",hex_encrypted_masterkey);
 
-    asprintf(&hex_salt
+  asprintf(&hex_salt
     ,"%02x%02x%02x%02x%02x%02x%02x%02x"
     , salt[0], salt[1], salt[2], salt[3], salt[4], salt[5], salt[6], salt[7]);
-  printf("%s\n",hex_salt);
+  //printf("%s\n",hex_salt);
 
-  printf("========================================================================\n");
-  printf("%s\n",hex_pkey);
-  printf("%s\n",hex_encrypted_seckey);
-  printf("%s\n",hex_encrypted_masterkey);
-  printf("%s\n",hex_salt);
-	printf("========================================================================\n");
+  //printf("========================================================================\n");
+  //printf("%s\n",hex_pkey);
+  //printf("%s\n",hex_encrypted_seckey);
+  //printf("%s\n",hex_encrypted_masterkey);
+  //printf("%s\n",hex_salt);
+	//printf("========================================================================\n");
   mysql_init(&my_connection);
     //"localhost", "root", "123456", "mysql" : ip, user, passwd, database;
     if (mysql_real_connect(&my_connection, "localhost", "root", "123456", "walletinfo", 0, NULL, 0)) 
     {
-        //printf("Connection success\n");
+        printf("Connection success...\n");
 
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
@@ -211,16 +209,16 @@ int main(int argc, char **argv)
         ,hex_pkey
         ,hex_encrypted_seckey
         ,hex_encrypted_masterkey
-        ,salt
+        ,hex_salt
         ,method
         ,rounds);
-       
 
         res = mysql_query(&my_connection, sql_insert);
 
         if (!res) 
         {
-            printf("Inserted %lu rows\n", (unsigned long)mysql_affected_rows(&my_connection));
+            printf("Insert %lu rows success...\n", (unsigned long)mysql_affected_rows(&my_connection));
+            printf("You can goto your database to check result...\n");
         } 
         else 
         {
@@ -244,6 +242,5 @@ int main(int argc, char **argv)
     free(hex_encrypted_seckey);
     free(hex_encrypted_masterkey);
     free(hex_salt);
-
     return EXIT_SUCCESS;
 }
