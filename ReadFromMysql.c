@@ -33,7 +33,7 @@ int main()
   }
   else
   {
-    //printf("Connected...\n");
+    printf("Connected...\n");
   }
   query = "select * from info where id=2;";
   t = mysql_real_query(&mysql, query, (unsigned int)strlen(query));//执行指定为计数字符串的SQL查询。
@@ -41,11 +41,11 @@ int main()
   {
     printf("ERROR query: %s", mysql_error(&mysql));
   }
-
+  printf("1111\n");
   res = mysql_store_result(&mysql);//检索完整的结果集至客户端。
-  mysql_close(&mysql);
+  printf("2222\n");
   row = mysql_fetch_row(res);
-  
+  printf("3333\n");
   asprintf(&mail,"%s", row[1]);
   asprintf(&hex_pubkey,"%s", row[2]);
   asprintf(&hex_encsec,"%s", row[3]);
@@ -53,9 +53,10 @@ int main()
   asprintf(&hex_salt,"%s", row[5]);
   asprintf(&s_method,"%s", row[6]);
   asprintf(&s_rounds,"%s", row[7]);
-
+  printf("4444\n");
   mysql_free_result(res);//释放结果集使用的内存。
-
+  mysql_close(&mysql);
+  printf("5555\n");
   printf("mail is %s\n", mail);
   printf("pubkey is %s\n", hex_pubkey);
   printf("encsec is %s\n", hex_encsec);
@@ -63,7 +64,6 @@ int main()
   printf("salt is %s\n", hex_salt);
   printf("method is %s\n", s_method);
   printf("rounds is %s\n", s_rounds);
-
 
   hexToStr(hex_pubkey, pubkey);
   hexToStr(hex_encsec, encsec);
