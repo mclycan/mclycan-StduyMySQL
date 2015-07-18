@@ -8,10 +8,10 @@ int hexCharToValue(const unsigned char ch);
 
 int main()
 {
-  MYSQL mysql;    //mysql连接
-  MYSQL_RES *res; //这个结构代表返回行的一个查询结果集
-  MYSQL_ROW row; //一个行数据的类型安全(type-safe)的表示
-  char *query;  //查询语句    
+  MYSQL mysql;    
+  MYSQL_RES *res; 
+  MYSQL_ROW row; 
+  char *query;  
   int t,r,i;
   mysql_init(&mysql);
   unsigned char *mail;
@@ -35,17 +35,18 @@ int main()
   {
     printf("Connected...\n");
   }
-  query = "select * from info where id=2;";
-  t = mysql_real_query(&mysql, query, (unsigned int)strlen(query));//执行指定为计数字符串的SQL查询。
+  // can change the id here or you can use sprintf/asprintf to operate mysql with value;
+  query = "select * from info where id=1;";
+  t = mysql_real_query(&mysql, query, (unsigned int)strlen(query));
   if(t)
   {
     printf("ERROR query: %s", mysql_error(&mysql));
   }
-  printf("1111\n");
-  res = mysql_store_result(&mysql);//检索完整的结果集至客户端。
-  printf("2222\n");
+
+  res = mysql_store_result(&mysql);// like a check;
+
   row = mysql_fetch_row(res);
-  printf("3333\n");
+
   asprintf(&mail,"%s", row[1]);
   asprintf(&hex_pubkey,"%s", row[2]);
   asprintf(&hex_encsec,"%s", row[3]);
@@ -53,10 +54,11 @@ int main()
   asprintf(&hex_salt,"%s", row[5]);
   asprintf(&s_method,"%s", row[6]);
   asprintf(&s_rounds,"%s", row[7]);
-  printf("4444\n");
-  mysql_free_result(res);//释放结果集使用的内存。
+
+  mysql_free_result(res);//free
   mysql_close(&mysql);
-  printf("5555\n");
+
+  // check the elements
   printf("mail is %s\n", mail);
   printf("pubkey is %s\n", hex_pubkey);
   printf("encsec is %s\n", hex_encsec);
@@ -69,19 +71,38 @@ int main()
   hexToStr(hex_encsec, encsec);
   hexToStr(hex_encmas, encmas);
   hexToStr(hex_salt, salt);
-  
+
+  // check the elements
   printf("pubkey is %s\n", pubkey);
   printf("encsec is %s\n", encsec);
   printf("encmas is %s\n", encmas);
   printf("salt is %s\n", salt);
 
+  for(i = 0; i < 33; i++)
+  {
+    if(i % 11 == 0)
+      printf("\n");
+    printf("%02x ", pubkey[i]);
+  }
   for(i = 0; i < 48; i++)
   {
-    if(i % 8 == 0)
+    if(i % 16 == 0)
       printf("\n");
-    printf("0x%02x ", encsec[i]);
+    printf("%02x ", encsec[i]);
   }
   printf("\n"); 
+  for(i = 0; i < 48; i++)
+  {
+    if(i % 16 == 0)
+      printf("\n");
+    printf("%02x ", encmas[i]);
+  }
+  printf("\n"); 
+  for(i = 0; i < 8; i++)
+  {
+    printf("%02x ", salt[i]);
+  }
+  printf("\n");
 
   free(hex_pubkey);
   free(hex_encsec);
@@ -105,7 +126,7 @@ int hexToStr(unsigned char *hex, unsigned char *ch)
       *ch = '\0';
       return -3;
     }
-    hex++; //指针移动到下一个字符上
+    hex++; 
     low = hexCharToValue(*hex);
     if(low < 0){
       *ch = '\0';
@@ -121,7 +142,7 @@ int hexToStr(unsigned char *hex, unsigned char *ch)
 
 int hexCharToValue(const unsigned char ch){
   int result = 0;
-  //获取16进制的高字节位数据
+
   if(ch >= '0' && ch <= '9'){
     result = (int)(ch - '0');
   }
