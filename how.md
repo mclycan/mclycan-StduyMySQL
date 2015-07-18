@@ -128,4 +128,7 @@
 		详见 ReadFromMysql.c 或者 readmysql-example.c
 
 
-	gcc -I/usr/include/mysql ReadFromMysql.c -L/usr/lib/mysql -lmysqlclient -o ReadFromMysql
+
+1. **编译**：
+	
+		gcc -I/usr/include/mysql ReadFromMysql.c -L/usr/lib/mysql -lmysqlclient -o ReadFromMysql
