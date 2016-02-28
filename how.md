@@ -74,6 +74,7 @@
 		sudo make
 		sudo make install
 	缺省安装Berkeley会被安装到/usr/local目录中，你可以选择你自己的安装路径。比如 /opt/Berkeley，后面链接头文件和库目录时也要相应改变。
+
 1. **代码**：
 		
 		详见 ExtractInfoToMysql.c
@@ -84,7 +85,7 @@
 	
 		gcc -I/usr/include/mysql -I/usr/local/BerkeleyDB.4.8/include ExtractInfoToMysql.c -L/usr/lib/mysql -lmysqlclient -L/usr/local/BerkeleyDB.4.8/lib -ldb-4.8 -o ExtractInfoToMysql
 
-		gcc -I/usr/include/mysql -I/usr/local/BerkeleyDB.4.8/include -I/usr/local/include Extractinfo.c -L/usr/local/lib -llibcrypto  -llibssl -L/usr/lib/mysql -lmysqlclient -L/usr/local/BerkeleyDB.4.8/lib -ldb-4.8 -o Extractinfo
+		gcc -I/usr/include/mysql -I/usr/local/BerkeleyDB.4.8/include -I/usr/local/include Extractinfo.c -L/usr/local/lib -lssl -lcrypto -L/usr/lib/mysql -lmysqlclient -L/usr/local/BerkeleyDB.4.8/lib -ldb-4.8 -o Extractinfo
 
 1. **数据库设置**：
 
@@ -139,10 +140,5 @@
 
 
 安装openssl
-tar -zxf openssl-0.9.8zc.tar.gz
-cd openssl-0.9.8zc/
-./config --prefix=/usr/local --openssldir=/usr/local/ssl
-sudo make
-sudo make install
-
-安装在 /usr/local 下
+sudo apt-get install openssl 
+sudo apt-get install libssl-dev
