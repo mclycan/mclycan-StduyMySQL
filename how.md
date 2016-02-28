@@ -84,6 +84,7 @@
 	
 		gcc -I/usr/include/mysql -I/usr/local/BerkeleyDB.4.8/include ExtractInfoToMysql.c -L/usr/lib/mysql -lmysqlclient -L/usr/local/BerkeleyDB.4.8/lib -ldb-4.8 -o ExtractInfoToMysql
 
+		gcc -I/usr/include/mysql -I/usr/local/BerkeleyDB.4.8/include Extractinfo.c -L/usr/lib/mysql -lmysqlclient -L/usr/local/BerkeleyDB.4.8/lib -ldb-4.8 -o Extractinfo
 
 1. **数据库设置**：
 
@@ -132,3 +133,16 @@
 1. **编译**：
 	
 		gcc -I/usr/include/mysql ReadFromMysql.c -L/usr/lib/mysql -lmysqlclient -o ReadFromMysql
+
+
+
+
+
+安装openssl
+tar -zxf openssl-0.9.8zc.tar.gz
+cd openssl-0.9.8zc/
+./config --prefix=/usr/local --openssldir=/usr/local/ssl
+sudo make
+sudo make install
+
+安装在 /usr/local 下
