@@ -7,11 +7,8 @@
 #include <unistd.h>
 #include <mysql/mysql.h>
 #include <openssl/evp.h>
-#include <openssl/x509.h>
 #include <stdint.h>
 #include <assert.h>
-#include <openssl/pem.h>
-#include <openssl/bio.h>
 
 
 
@@ -19,42 +16,16 @@ unsigned char *pkey, *encrypted_seckey, *encrypted_masterkey, *salt;
 unsigned char *base64_pkey, *base64_encrypted_seckey, *base64_encrypted_masterkey, *base64_salt;
 unsigned int pubkey_len, encrypted_seckey_len, encrypted_masterkey_len, method, rounds;
 
-int bio_base64_encrypt(const uint8_t *in, size_t len, uint8_t *out, size_t size)
+int EncodeBase64(const unsigned char *pFrom, unsigned char *pTo, int nFromLen)
 {
-      assert(in);
-      assert(out);
-      assert(size >= len * 4 / 3);
-      BIO *bio, *b64;
-      b64 = BIO_new(BIO_f_base64());
-      bio = BIO_new(BIO_s_mem());
-      bio = BIO_push(b64, bio);
-      BIO_write(bio, in, len);
-      BIO_flush(bio);
-      BUF_MEM *bptr = NULL;
-      BIO_get_mem_ptr(bio, &bptr);
-      memcpy(out, bptr->data, bptr->length);
-      out[bptr->length] = 0;
-      BIO_free_all(bio);
-      return bptr->length;
+  int nEncodeLen = EVP_EncodeBlock(pTo, pFrom, nFromLen);
+  return nEncodeLen;
 }
 
-int bio_base64_decrypt(const uint8_t *in, size_t len, uint8_t *out, size_t size)
+int DecodeBase64(const unsigned char *pFrom, unsigned char *pTo, int nFromLen)
 {
-      assert(in);
-      assert(out);
-      assert(size >= len * 2 / 3);
-      BIO *bio, *b64;
-      BUF_MEM *bptr = NULL;
-      b64 = BIO_new(BIO_f_base64());
-      BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
-      bio = BIO_new_mem_buf(in, len);
-      bio = BIO_push(b64, bio);
-
-      int counts = BIO_read(bio, out, size);
-      out[counts] = 0;
-      BIO_free_all(bio);
-      return out;
-
+  int nDecodeLen = EVP_DecodeBlock(pTo, pFrom, nFromLen);
+  return nDecodeLen;
 }
 
 
@@ -160,10 +131,8 @@ int main(int argc, char **argv)
   MYSQL my_connection;
   int res, i;
   unsigned char sql_insert[520];
-  unsigned char buf1[1024] = { 0 };
-  unsigned char buf2[1024] = { 0 };
-  unsigned char buf3[1024] = { 0 };
-  unsigned char buf4[1024] = { 0 };
+  int len;
+
  
   if(optind >= argc)
     {
@@ -185,18 +154,23 @@ int main(int argc, char **argv)
       exit(EXIT_FAILURE);
     }
 
-  //pubkey_len, encrypted_seckey_len, encrypted_masterkey_len
-  //*pkey, *encrypted_seckey, *encrypted_masterkey, *salt;
+  //encode
+ base64_pkey = malloc(100);
+ base64_encrypted_seckey = malloc(100);
+ base64_encrypted_masterkey = malloc(100);
+ base64_salt = malloc(100);
 
-  bio_base64_encrypt(pkey, sizeof(pkey), buf1, sizeof(buf1));
-  bio_base64_encrypt(encrypted_seckey, sizeof(encrypted_seckey), buf2, sizeof(buf2));
-  bio_base64_encrypt(encrypted_masterkey, sizeof(encrypted_masterkey), buf3, sizeof(buf3));
-  bio_base64_encrypt(salt, sizeof(salt), buf4, sizeof(buf4));
+ len = EncodeBase64(pkey, base64_pkey, pubkey_len);
+ printf("%s\n", pkey);
+ len = EncodeBase64(encrypted_seckey, base64_encrypted_seckey, encrypted_seckey_len);
+ printf("%s\n", encrypted_seckey);
+ len = EncodeBase64(encrypted_masterkey, base64_encrypted_masterkey, encrypted_masterkey_len);
+ printf("%s\n", encrypted_masterkey);
+ len = EncodeBase64(salt, base64_salt, 8);
+ printf("%s\n", salt);
 
-  //base64_Encode(pkey, pubkey_len, base64_pkey);
-  //base64_Encode(encrypted_seckey, encrypted_seckey_len, base64_encrypted_seckey);
-  //base64_Encode(encrypted_masterkey, encrypted_masterkey_len, base64_encrypted_masterkey);
-  //base64_Encode(salt, 8, base64_salt);
+
+
 
   mysql_init(&my_connection);
     
@@ -207,10 +181,10 @@ int main(int argc, char **argv)
         sprintf(sql_insert
         ,"INSERT INTO info(mail, pubkey, encsec, encmas, salt, method, rounds) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%d');"
         ,mail
-        ,buf1
-        ,buf2
-        ,buf3
-        ,buf4
+        ,base64_pkey
+        ,base64_encrypted_seckey
+        ,base64_encrypted_masterkey
+        ,base64_salt
         ,method
         ,rounds);
 
