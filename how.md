@@ -84,7 +84,7 @@
 	
 		gcc -I/usr/include/mysql -I/usr/local/BerkeleyDB.4.8/include ExtractInfoToMysql.c -L/usr/lib/mysql -lmysqlclient -L/usr/local/BerkeleyDB.4.8/lib -ldb-4.8 -o ExtractInfoToMysql
 
-		gcc -I/usr/include/mysql -I/usr/local/BerkeleyDB.4.8/include Extractinfo.c -L/usr/lib/mysql -lmysqlclient -L/usr/local/BerkeleyDB.4.8/lib -ldb-4.8 -o Extractinfo
+		gcc -I/usr/include/mysql -I/usr/local/BerkeleyDB.4.8/include -I/usr/local/include Extractinfo.c -L/usr/local/lib -llibcrypto  -llibssl -L/usr/lib/mysql -lmysqlclient -L/usr/local/BerkeleyDB.4.8/lib -ldb-4.8 -o Extractinfo
 
 1. **数据库设置**：
 

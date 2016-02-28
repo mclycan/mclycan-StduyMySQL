@@ -21,7 +21,7 @@ void base64_Encode(unsigned char *input, int inl, unsigned char *output)
   
     EVP_EncodeInit(&ctx);  
  
-    EVP_EncodeUpdate(&ctx, output, &outl, in, inl);  
+    EVP_EncodeUpdate(&ctx, output, &outl, input, inl);  
   
     EVP_EncodeFinal(&ctx, output, &outl);  
 
@@ -36,9 +36,9 @@ void base64_Decode(unsigned char *input, int inl, unsigned char *output)
   
     EVP_DecodeInit(&ctx);//Base64 解码初始化  
    
-    EVP_DecodeUpdate(&ctx, out, &outl, input, inl);  
+    EVP_DecodeUpdate(&ctx, output, &outl, input, inl);  
     
-    EVP_DecodeFinal(&ctx, out, &outl);  
+    EVP_DecodeFinal(&ctx, output, &outl);  
   
     return;  
 }  
