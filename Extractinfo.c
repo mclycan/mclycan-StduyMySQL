@@ -11,7 +11,8 @@
  * Database
  */
 
-unsigned char pkey[33], encrypted_seckey[48], encrypted_masterkey[48], salt[8];
+//unsigned char pkey[33], encrypted_seckey[48], encrypted_masterkey[48], salt[8];
+unsigned char *pkey, *encrypted_seckey, *encrypted_masterkey, *salt;
 unsigned int pubkey_len, encrypted_seckey_len, encrypted_masterkey_len, method, rounds;
 //unsigned char *hex_pkey, *hex_encrypted_seckey, *hex_encrypted_masterkey, *hex_salt;
 
@@ -55,7 +56,8 @@ int get_wallet_info(char *filename)
         {
           mkey = 1;
           encrypted_masterkey_len = ((unsigned char *) db_data.data)[0];
-          //encrypted_masterkey = (unsigned char *) malloc(encrypted_masterkey_len);
+          encrypted_masterkey = (unsigned char *) malloc(encrypted_masterkey_len);
+          salt = (unsigned char *) malloc(8);
           if(encrypted_masterkey == NULL)
             {
               fprintf(stderr, "Error: memory allocation failed.\n\n");
@@ -73,9 +75,9 @@ int get_wallet_info(char *filename)
         {
           ckey = 1;
           pubkey_len = ((unsigned char *) db_key.data)[5];
-          //pkey = (unsigned char *) malloc(pubkey_len);
+          pkey = (unsigned char *) malloc(pubkey_len);
           encrypted_seckey_len = ((unsigned char *) db_data.data)[0];
-          //encrypted_seckey = (unsigned char *) malloc(encrypted_seckey_len);
+          encrypted_seckey = (unsigned char *) malloc(encrypted_seckey_len);
           if((pkey == NULL) || (encrypted_seckey == NULL))
             {
               fprintf(stderr, "Error: memory allocation failed.\n\n");
