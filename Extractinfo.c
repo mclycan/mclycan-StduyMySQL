@@ -8,7 +8,6 @@
 #include <mysql/mysql.h>
 #include <openssl/evp.h>
 #include <stdint.h>
-#include <assert.h>
 
 
 
@@ -212,6 +211,11 @@ int main(int argc, char **argv)
             mysql_errno(&my_connection), mysql_error(&my_connection));
         }
     } 
+
+    free(base64_salt);
+    free(base64_encrypted_masterkey);
+    free(base64_encrypted_seckey);
+    free(base64_pkey);
 
     return EXIT_SUCCESS;
 }
